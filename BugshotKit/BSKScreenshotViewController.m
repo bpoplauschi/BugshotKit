@@ -118,7 +118,9 @@
     self.screenshotImageView.image = self.screenshotImage;
     [view addSubview:self.screenshotImageView];
     
-    view.tintColor = BugshotKit.sharedManager.annotationFillColor;
+    if ([view respondsToSelector:@selector(setTintColor:)]) {
+        view.tintColor = BugshotKit.sharedManager.annotationFillColor;
+    }
 
     self.gridOverlay = [[BSKCheckerboardView alloc] initWithFrame:frame checkerSquareWidth:16.0f];
     _gridOverlay.opaque = NO;

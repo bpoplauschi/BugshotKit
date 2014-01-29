@@ -82,7 +82,15 @@ static UIImage *rotateIfNeeded(UIImage *src);
     
     self.screenshotLabel = [UILabel new];
     self.screenshotLabel.text = @"SCREENSHOT";
-    self.screenshotLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+    
+    UIFont *labelFont = nil;
+    if ([UIFont instancesRespondToSelector:@selector(preferredFontForTextStyle:)]) {
+        labelFont = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+    } else {
+        labelFont = [UIFont systemFontOfSize:12];
+    }
+    
+    self.screenshotLabel.font = labelFont;
     self.screenshotLabel.textColor = BugshotKit.sharedManager.annotationFillColor;
     self.screenshotLabel.textAlignment = NSTextAlignmentCenter;
     self.screenshotLabel.translatesAutoresizingMaskIntoConstraints = NO;

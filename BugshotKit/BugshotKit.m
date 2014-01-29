@@ -272,7 +272,7 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
         if (invocationGestures & BSKInvocationGestureSwipeDown) NSLog(@"[BugshotKit] Enabled for %d-finger swipe down.", (int) fingerCount);
     }
 
-    if (invocationGestures & BSKInvocationGestureSwipeFromRightEdge) {
+    if (NSClassFromString(@"UIScreenEdgePanGestureRecognizer") && (invocationGestures & BSKInvocationGestureSwipeFromRightEdge) ) {
         // Similar deal with these (see swipe recognizers above), but screen-edge gesture recognizers always return 0 upon reading the .edges property.
         // I guess it's write-only. So we actually need four different action methods to know which one was invoked.
         
@@ -394,7 +394,9 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
     NSMutableSet *drawnWindows = [NSMutableSet set];
     for (UIWindow *window in UIApplication.sharedApplication.windows) {
         [drawnWindows addObject:window];
-        [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:NO];
+        if ([window respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+            [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:NO];
+        }
     }
     
     // Must iterate through all windows we know about because UIAlertViews, etc. don't add themselves to UIApplication.windows
