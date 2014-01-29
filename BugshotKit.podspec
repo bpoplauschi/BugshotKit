@@ -5,9 +5,9 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/marcoarment/BugshotKit'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.author = { 'Marco Arment' => 'arment@marco.org' }
-  s.source = { :git => 'https://github.com/marcoarment/BugshotKit.git' }
+  s.source = { :git => 'https://github.com/bpoplauschi/BugshotKit.git' }
   s.source_files  = 'BugshotKit/*.{h,m}'
   s.resource  = [ 'Resources/*' ]
   s.requires_arc = true
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '6.1'
 end
