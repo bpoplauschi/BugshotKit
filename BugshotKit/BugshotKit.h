@@ -97,6 +97,12 @@ typedef enum : NSUInteger {
              emptyBottomLine:(BOOL)emptyBottomLine
               withCompletion:(void (^)(UIImage *result))completion;
 
+/**
+ *  Overwrite if you need to load the logs from a custom place. Remember to add them using `addLogMessage:`
+ *
+ *  @return YES if the retrieval was successfull
+ */
+- (BOOL)retrieveLogs;
 
 @property (nonatomic) BOOL displayConsoleTextInLogViewer;
 @property (nonatomic, strong) UIColor *annotationFillColor;

@@ -176,7 +176,7 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
         __weak BugshotKit *weakSelf = self;
         dispatch_source_set_event_handler(source, ^{
             [weakSelf.consoleRefreshThrottler afterDelay:0.5 do:^(id self) {
-                if ([self updateFromASL]) {
+                if ([self retrieveLogs]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [NSNotificationCenter.defaultCenter postNotificationName:BSKNewLogMessageNotification object:nil];
                     });
@@ -185,7 +185,7 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
         });
         
         dispatch_async(self.logQueue, ^{
-            [self updateFromASL];
+            [self retrieveLogs];
             dispatch_resume(source);
         });
     }
@@ -509,6 +509,10 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
     if (self.consoleMessages.count > self.consoleLogMaxLines * 1.25) {
         [self.consoleMessages removeObjectsInRange:NSMakeRange(0, self.consoleMessages.count - self.consoleLogMaxLines)];
     }
+}
+
+- (BOOL)retrieveLogs {
+    return [self updateFromASL];
 }
 
 // assumed to always be in logQueue
