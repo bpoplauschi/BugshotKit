@@ -25,6 +25,8 @@ typedef enum : NSUInteger {
 
 @interface BugshotKit : NSObject <UIGestureRecognizerDelegate, BSKMainViewControllerDelegate>
 
++ (instancetype)sharedManager;
+
 /*
     Call this from your UIApplication didFinishLaunching:... method.
     
@@ -43,6 +45,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, copy) NSString *destinationEmailAddress;
 @property (nonatomic) NSUInteger consoleLogMaxLines;
+@property (nonatomic, copy) NSArray *formattedConsoleMessages;  // array of NSString formatted logs. Use this to override the default behavior
 
 /*
     Every email has an info.json attachment with a serialized dictionary containing at least these keys:
