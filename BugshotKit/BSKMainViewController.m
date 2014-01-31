@@ -5,6 +5,7 @@
 #import "BSKMainViewController.h"
 #import "BugshotKit.h"
 #import "BSKLogViewController.h"
+#import "BSKLogTableViewController.h"
 #import "BSKScreenshotViewController.h"
 #import "BSKToggleButton.h"
 #import <QuartzCore/QuartzCore.h>
@@ -235,7 +236,8 @@ static UIImage *rotateIfNeeded(UIImage *src);
 
 - (void)openConsoleViewer:(id)sender
 {
-    [self.navigationController pushViewController:[[BSKLogViewController alloc] init] animated:YES];
+    UIViewController *logViewController = ([BugshotKit sharedManager].formattedConsoleMessages) ? [[BSKLogTableViewController alloc] init] : [[BSKLogViewController alloc] init];
+    [self.navigationController pushViewController:logViewController animated:YES];
 }
 
 - (void)includeScreenshotToggled:(id)sender
@@ -275,15 +277,20 @@ static UIImage *rotateIfNeeded(UIImage *src);
 
 - (void)consoleButtonTapped:(id)sender
 {
-    [self.navigationController pushViewController:[[BSKLogViewController alloc] init] animated:YES];
+    UIViewController *logViewController = ([BugshotKit sharedManager].formattedConsoleMessages) ? [[BSKLogTableViewController alloc] init] : [[BSKLogViewController alloc] init];
+    [self.navigationController pushViewController:logViewController animated:YES];
 }
 
 - (void)sendButtonTapped:(id)sender
 {
     if (self.includeLogToggle.on) {
+        if ([BugshotKit sharedManager].formattedConsoleMessages) {
+            [self sendButtonTappedWithLog:[[BugshotKit sharedManager].formattedConsoleMessages componentsJoinedByString:@"\n"]];
+        } else {
         [BugshotKit.sharedManager currentConsoleLogWithDateStamps:YES withCompletion:^(NSString *result) {
             [self sendButtonTappedWithLog:result];
         }];
+    }
     }
     else {
         [self sendButtonTappedWithLog:nil];

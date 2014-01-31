@@ -456,6 +456,10 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
     dispatch_async(self.logQueue, ^{
         NSMutableString *string = [NSMutableString string];
 
+        if (self.formattedConsoleMessages) {
+            string = [NSMutableString stringWithString:[self.formattedConsoleMessages componentsJoinedByString:@"\n"]];
+        } else {
+        
         char fdate[24];
         for (BSKLogMessage *msg in self.consoleMessages) {
             if (dateStamps) {
@@ -466,6 +470,7 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
             } else {
                 [string appendFormat:@"%@\n", msg.message];
             }
+        }
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
