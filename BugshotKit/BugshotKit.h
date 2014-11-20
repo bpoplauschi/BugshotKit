@@ -6,8 +6,9 @@
 #import "BSKMainViewController.h"
 #import "BSKWindow.h"
 
-#if ! DEBUG
-#warning BugshotKit is being included in a non-debug build.
+// CHANGED by BogdanP: warning only if we include BugshotKit in AppStore builds
+#if APPSTORE
+#warning BugshotKit is being included in an AppStore build.
 #endif
 
 extern NSString * const BSKNewLogMessageNotification;
