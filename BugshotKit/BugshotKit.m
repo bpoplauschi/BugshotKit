@@ -532,7 +532,13 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
     aslresponse r = asl_search(NULL, q);
     BOOL foundNewEntries = NO;
     
-    while ( (m = aslresponse_next(r)) ) {
+// CHANGED by BogdanP on 01.10.2014 - avoiding the `aslresponse_next` message is deprecated. Same solution as in CocoaLumberjack
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+    while ( (m = asl_next(r)) )
+#else
+    while ( (m = aslresponse_next(r)) )
+#endif
+    {
         if (myPID != atol(asl_get(m, ASL_KEY_PID))) continue;
 
         // dupe checking
@@ -548,7 +554,12 @@ UIImage *BSKImageWithDrawing(CGSize size, void (^drawingCommands)())
         [self addLogMessage:[NSString stringWithUTF8String:msg] timestamp:msgTime];
     }
     
+// CHANGED by BogdanP on 01.10.2014 - avoiding the `aslresponse_free` message is deprecated. Same solution as in CocoaLumberjack
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+    asl_free(r);
+#else
     aslresponse_free(r);
+#endif
     asl_free(q);
 
     return foundNewEntries;
