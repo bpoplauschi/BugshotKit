@@ -37,9 +37,8 @@ typedef enum : NSUInteger {
 
 /* You can also always show it manually */
 + (void)show;
-+ (void)dismissAninmated:(BOOL)animated completion:(void(^)())completion;
++ (void)dismissAnimated:(BOOL)animated completion:(void(^)())completion;
 
-+ (instancetype)sharedManager;
 - (void)clearLog;
 
 + (void)addLogMessage:(NSString *)message;
