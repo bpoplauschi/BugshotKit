@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'BugshotKit'
-  s.version = '0.3.1'
+  s.version = '0.3.2'
   s.summary = 'In-app bug reporting for developers and testers, with annotated screenshots and the console log.'
   s.homepage = 'https://github.com/marcoarment/BugshotKit'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
